@@ -1,5 +1,11 @@
 var product = require('./shoppingProduct.js');
 var trolley = require('./shoppingTrolley.js');
+var MongoClient = require('../mongoClient.js');
+
+MongoClient.insertProducts(db, function(err,result) {
+    if(err) throw err;
+
+});
 
 exports.testShoppingTrolley = function() {
 

@@ -3,7 +3,9 @@ var assert = require('assert');
 
 var mongoclient = mgdb.MongoClient;
 
-var url='mongodb://localhost:8100/almacen'
+var url='mongodb://localhost:27017/shopping'
+
+var collection;
 
 mongoclient.connect(url,function (err,db) {
  	assert.equal(err,null);
@@ -13,7 +15,7 @@ mongoclient.connect(url,function (err,db) {
     	if (err) throw err;
     	console.log("Collection created!");
   	});*/
-    insertDocuments(db,function() {
+    insertProducts(db,function() {
     	if (err) throw err;
     	console.log('success with insertion!');
     	db.close();
@@ -22,7 +24,7 @@ mongoclient.connect(url,function (err,db) {
 
 var insertProducts = function(db, callback) {
   // Get the documents collection
-  var collection = db.collection('products');
+  collection = db.collection('products');
   //Clean the database
   collection.deleteMany({});
   // Insert some documents
