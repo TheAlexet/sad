@@ -1,7 +1,7 @@
 module.exports = class Product {
-    constructor(id, name, description, price, amount) {
+    constructor(id, pName, description, price, amount) {
         this.id = id;
-        this.name = name;
+        this.pName = pName;
         this.description = description;
         this.price = price;
         this.amount = amount;
@@ -16,11 +16,11 @@ module.exports = class Product {
     }
 
     get name() {
-        return this._name;
+        return this._pName;
     }
 
-    set name(newName) {
-        this._name = newName
+    set pName(newpName) {
+        this._pName = newpName
     }
 
     get description() {
@@ -49,7 +49,7 @@ module.exports = class Product {
 
     toString() {
         return "ID: " + this._id + 
-               ", name: " + this._name + 
+               ", pName: " + this._pName + 
                ", description: " + this._description + 
                ", price: " + this._price + 
                ", amount: " + this._amount + "."

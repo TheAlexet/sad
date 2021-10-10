@@ -1,6 +1,8 @@
+var mongoClient = require ('./mongoClient.js');
+
 module.exports = class Trolley {
     constructor(products) {
-        this.products = products
+        this.products = products;
     }
 
     get products() {
@@ -15,9 +17,9 @@ module.exports = class Trolley {
         var productsList = "Your trolley: ";
         this._products.map((product, index) => {
             if(index === this.products.length - 1) {
-                productsList += product._name + ".";
+                productsList += product._pName + ".";
             } else {
-                productsList += product._name + ", ";
+                productsList += product._pName + ", ";
             }
         })
         return productsList;
@@ -47,5 +49,23 @@ module.exports = class Trolley {
             productsList = productsList.splice(productIndex, 1);
             console.log("--- PRODUCT REMOVED ---\n");
         }
+    }
+
+    addProductDB(newProduct) {
+        //Check if the newProduct is already in the trolley, by checking its id
+        var productsList = this._products;
+        var alreadyInTrolley = productsList.filter(product => product.id === newProduct.id).length > 0 ? true : false;
+        if(mongoClient.checkStock(productsList.id, productsList.amount)){
+            if(alreadyInTrolley) { //If already in the trolley, add amounts
+                var productIndex = productsList.findIndex(product => product.id === newProduct.id);
+                productsList[productIndex].amount += newProduct.amount;
+            } else { //If the product is new, add the product instead
+                productsList = productsList.push(newProduct);
+            }
+            console.log("--- PRODUCT ADDED ---\n");
+        
+        } else{
+            console.log("No stock available");
+        }       
     }
 }

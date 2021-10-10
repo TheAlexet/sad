@@ -1,3 +1,3 @@
-var testTrolley = require('./my_modules/shoppingTrolley/testTrolley.js');
+var testTrolley = require('./my_modules/shoppingTrolley/testTrolleyDB.js');
 
 testTrolley.testShoppingTrolley();
