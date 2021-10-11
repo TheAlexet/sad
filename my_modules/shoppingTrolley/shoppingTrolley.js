@@ -51,21 +51,23 @@ module.exports = class Trolley {
         }
     }
 
-    addProductDB(newProduct) {
+    async addProductDB(newProduct) {
         //Check if the newProduct is already in the trolley, by checking its id
-        var productsList = this._products;
-        var alreadyInTrolley = productsList.filter(product => product.id === newProduct.id).length > 0 ? true : false;
-        if(mongoClient.checkStock(productsList.id, productsList.amount)){
-            if(alreadyInTrolley) { //If already in the trolley, add amounts
-                var productIndex = productsList.findIndex(product => product.id === newProduct.id);
-                productsList[productIndex].amount += newProduct.amount;
-            } else { //If the product is new, add the product instead
-                productsList = productsList.push(newProduct);
-            }
-            console.log("--- PRODUCT ADDED ---\n");
-        
-        } else{
-            console.log("No stock available");
-        }       
+            var productsList = this._products;
+            var targetProduct = productsList.filter(product => product.id === newProduct.id);
+            var alreadyInTrolley = targetProduct.length > 0 ? true : false;
+            var thereIsStock = await mongoClient.checkStock(newProduct.id, newProduct.amount);
+            if(thereIsStock){
+                if(alreadyInTrolley) { //If already in the trolley, add amounts
+                    var productIndex = productsList.findIndex(product => product.id === newProduct.id);
+                    productsList[productIndex].amount += newProduct.amount;
+                } else { //If the product is new, add the product instead
+                    productsList = productsList.push(newProduct);
+                }
+                console.log("--- PRODUCT ADDED ---\n");
+            
+            } else{
+                console.log("--- NO STOCK AVAILABLE ---\n");
+            }       
     }
 }

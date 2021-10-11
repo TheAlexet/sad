@@ -7,17 +7,16 @@ var url='mongodb+srv://dbUser:dbUserPassword@cluster0.oiahf.mongodb.net/myFirstD
 
 
 
-exports.testShoppingTrolley = function() {
+exports.testShoppingTrolley = async function() {
 
-    mongoClient.insertProducts(function(err,result) {
-        if(err) throw err;
-    });
+    const productsInserted = await mongoClient.insertProducts();
+    console.log(productsInserted);
 
     console.log("\n------------------------------ WELCOME TO MERCADONA ------------------------------\n");
 
     var product1 = new product(1, "Agua", "Bronchales 12L", 2.35, 2);
     var product2 = new product(2, "Pizza barbacoa", "Pizza barbacoa Casa Tarradellas", 2.93, 1);
-    var product3 = new product(3, "Ron Captain Morgan", "Arrrrrrrrrrrrrrggg", 7.25, 100);
+    var product3 = new product(3, "Ron Captain Morgan", "Arrrrrrrrrrrrrrggg", 7.25, 85);
     var myTrolley = new trolley([product1])
 
     console.log("\n------------------------------ PRODUCTS STOCK ------------------------------\n");
@@ -32,13 +31,23 @@ exports.testShoppingTrolley = function() {
 
     console.log("\n------------------------------  I'm starving. Gotta buy some pizza. ------------------------------\n");
 
-    myTrolley.addProductDB(product2)
-    console.log(myTrolley.toString())
+    try {
+        const addingResult = await myTrolley.addProductDB(product2);
+    }catch(err){
+        console.log(err.message);
+    }
+    
+    console.log(myTrolley.toString());
 
     console.log("\n------------------------------  I wanna be the pirate king. Need to find some crewmates. ------------------------------\n");
 
-    myTrolley.addProduct(product3)
-    console.log(myTrolley.toString())
+    try {
+        const addingResult = await myTrolley.addProductDB(product3);
+    }catch(err){
+        console.log(err);
+    }
+
+    console.log(myTrolley.toString());
 
     console.log("\n------------------------------  Not hungry anymore. ------------------------------\n");
 
