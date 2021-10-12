@@ -13,10 +13,6 @@ exports.checkStock = function(productId, number){
       assert.equal(err,null);
       var dbo = db.db('shopping');
       var collection = dbo.collection('products');
-      /*collection.find({}).toArray(function(err, prouctsList){
-        console.log(prouctsList);
-      });*/
-      //console.log(productId);
       collection.find({id: productId}).toArray(function(err, productsList){
         var result = productsList[0];
         var amount = result.amount;
@@ -27,21 +23,6 @@ exports.checkStock = function(productId, number){
     });
   });
 }
-
-/*mongoclient.connect(url,function (err,db) {
- 	assert.equal(err,null);
- 	console.log('conectado');
-
-	db.createCollection("documents", function(err, res) {
-    	if (err) throw err;
-    	console.log("Collection created!");
-  	});
-    insertProducts(db,function() {
-    	if (err) throw err;
-    	console.log('success with insertion!');
-    	db.close();
-    });
- }); */
 
 exports.insertProducts = function() {
   return new Promise((resolve, reject) => {
