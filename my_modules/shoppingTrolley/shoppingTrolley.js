@@ -1,18 +1,34 @@
 var mongoClient = require ('./mongoClient.js');
 
 module.exports = class Trolley {
+
+    /**
+     * Creates a new trolley
+     * @param  {Product[]} products The list of products of the trolley
+     */
     constructor(products) {
         this.products = products;
     }
 
+    /**
+     * Returns the list of products added to the trolley
+     */
     get products() {
         return this._products;
     }
 
+    /**
+     * Modifies the list of products added to the trolley
+     * @param  {Product[]} newProducts The new list of products of the trolley
+     */
     set products(newProducts) {
         this._products = newProducts;
     }
 
+    /**
+     * Returns a string with the products of the trolley in the following format:
+     * "Your trolley: Water, Cocacola, Juice."
+     */
     toString() {
         var productsList = "Your trolley: ";
         this._products.map((product, index) => {
@@ -25,6 +41,10 @@ module.exports = class Trolley {
         return productsList;
     }
 
+    /**
+     * Adds a new product to the trolley.
+     * @param  {Product} newProduct The new product that needs to be added to the trolley.
+     */
     addProduct(newProduct) {
         //Check if the newProduct is already in the trolley, by checking its id
         var productsList = this._products;
@@ -39,6 +59,10 @@ module.exports = class Trolley {
         console.log("--- PRODUCT ADDED ---\n");
     }
 
+    /**
+     * Removes a product from the trolley.
+     * @param  {Number} productId The id of the product that needs to be removed from the trolley.
+     */
     removeProduct(productId) {
         //Check if the product with id === productId is already in the trolley
         var productsList = this._products;
@@ -51,6 +75,10 @@ module.exports = class Trolley {
         }
     }
 
+    /**
+     * Adds a new product to the trolley, taking into account the product stock in the database, using async-await.
+     * @param  {Product} newProduct The new product that needs to be added to the trolley.
+     */
     async addProductDB(newProduct) {
         //Check if the newProduct is already in the trolley, by checking its id
             var productsList = this._products;
