@@ -23,12 +23,6 @@ exports.testShoppingTrolley = async function() {
     //We create a trolley that starts off with water inside (product1)
     var myTrolley = new trolley([product1])
 
-    console.log("\n------------------------------ PRODUCTS STOCK ------------------------------\n");
-
-    console.log(product1.toString());
-    console.log(product2.toString());
-    console.log(product3.toString());
-
     console.log("\n------------------------------ YOUR TROLLEY ------------------------------\n");
 
     console.log(myTrolley.toString())
