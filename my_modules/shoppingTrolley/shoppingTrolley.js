@@ -85,6 +85,7 @@ module.exports = class Trolley {
             var targetProduct = productsList.filter(product => product.id === newProduct.id);
             var alreadyInTrolley = targetProduct.length > 0 ? true : false;
             var thereIsStock = await mongoClient.checkStock(newProduct.id, newProduct.amount);
+            console.log("--- CHECKING STOCK ---\n");
             if(thereIsStock){
                 if(alreadyInTrolley) { //If already in the trolley, add amounts
                     var productIndex = productsList.findIndex(product => product.id === newProduct.id);
